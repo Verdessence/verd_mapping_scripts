@@ -1,11 +1,12 @@
 /*
 !.gitignore
+!README.md
 
 !omori/
 !omori/materials/
 !omori/scripts/
 !omori/shaders/
-!omori/shaders/fxc
+!omori/shaders/fxc/
 
 omori/scripts/stages/*
 # im a fat slob and leave breadcrumbs all over my desk
