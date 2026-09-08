@@ -1,11 +1,8 @@
 # Mapping Stuff
----
 Collection of vscripts or shaders that I did for specific maps
 
 ## If you're here for...
----
 ### Flexible Screenoverlay
----
 > [!NOTE]
 > readme file TBD
 - [Core File (screenoverlay.nut)](omori/scripts/screenoverlay.nut)
@@ -13,7 +10,6 @@ Collection of vscripts or shaders that I did for specific maps
 - [Helper Python File](omori/scripts/cutscene_gen.py)
 
 ### Font Renderer Shader 
----
 > [!NOTE]
 > readme file, other needed files TBD
 - [Core File (dialogue_text.nut)](omori/scripts/dialogue_text.nut)
