@@ -7,11 +7,7 @@ Collection of vscripts or shaders that I did for specific maps
 
 ## If you're here for...
 ### Flexible Screenoverlay
-> [!NOTE]
-> readme file TBD
-- [Core File (screenoverlay.nut)](omori/scripts/screenoverlay.nut)
-- [Repository (the one containing sequences) (screenoverlay_repo.nut)](omori/scripts/screenoverlay_repo.nut)
-- [Helper Python File (cutscene_gen.py)](omori/scripts/cutscene_gen.py)
+- [Main Index)](omori/projects/flexible_screenoverlay/README.md)
 
 ### Font Renderer Shader 
 > [!NOTE]
