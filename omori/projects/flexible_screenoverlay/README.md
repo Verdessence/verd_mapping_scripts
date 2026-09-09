@@ -31,4 +31,4 @@ You will need a separate file to contain the anim_name and anim_type (in this ca
 playanim is step one initializing the table from animlib, before storing the info into currentanim as a table, which is then iteratively sequenced by sequenceanim checking for the t_seq boundaries, calculating the framerate as its delay, before rendering it to player. if the array isn't done yet it repeats until its finished. stopanim just stops the sequence and cleans
 
 ### Why generate multiple VMTs for each frame?
-i tried using material modify control to control the frames beforehand, but it didn't work, probably due to gemini's incompetence and my incompetence at that time. might do a redo when i get to it especially after the font renderer project, to which i can blame more on gemini with it lol
+i tried using material modify control to control the frames beforehand, but it didn't work, because there wasn't anything for mmcs to bind to

@@ -7,7 +7,7 @@ Collection of vscripts or shaders that I did for specific maps
 
 ## If you're here for...
 ### Flexible Screenoverlay
-- [Main Index)](omori/projects/flexible_screenoverlay/README.md)
+- [Main Index](omori/projects/flexible_screenoverlay/README.md)
 
 ### Font Renderer Shader 
 > [!NOTE]

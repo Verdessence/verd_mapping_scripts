@@ -1,0 +1,22 @@
+version 1
+// text_quad_ref.smd -- single 64x36 (16:9) quad in the YZ plane, facing +X,
+// UVs 0..1 across the face, material = screenspace_font_poc.vmt
+// If the text renders mirrored or upside down in-game, flip the u or v
+// column respectively (SMD v is often inverted vs VTF conventions).
+nodes
+0 "root" -1
+end
+skeleton
+time 0
+0 0 0 0 0 0 0
+end
+triangles
+screenspace_font_line
+0  0 32 18  1 0 0  0 0
+0  0 -32 18  1 0 0  1 0
+0  0 -32 -18  1 0 0  1 1
+screenspace_font_line
+0  0 32 18  1 0 0  0 0
+0  0 -32 -18  1 0 0  1 1
+0  0 32 -18  1 0 0  0 1
+end

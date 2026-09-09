@@ -1,0 +1,53 @@
+// screenspace_font_line.vmt -- v2 dialogue material.
+// Same proven scaffold as v1; text now lives in $texture1 (the line bank).
+// Ship: shaders/fxc/screenspace_font_line_ps20b.vcs (compile the _ps2x.hlsl)
+//       materials/effects/shaders/dialogue_bank.vtf (from bake_dialogue.py;
+//       if the hand-written VTF fails to load, import dialogue_bank.png in
+//       VTFEdit: BGRA8888, point sample, no mips/LOD, clamp S+T)
+
+screenspace_general
+{
+	$pixshader "screenspace_font_line_ps20"
+
+	$basetexture "dev/font_atlas_16x16"
+	$texture1    "effects/shaders/dialogue_bank"
+	$texture2    ""
+	$texture3    ""
+
+	$x360appchooser 1
+	$ignorez        1
+	$fix_fb         32768
+	"<dx90" { $no_draw 1 }
+
+	$softwareskin 1
+	$translucent  1
+
+	$copyalpha                 0
+	$alpha_blend_color_overlay 0
+	$alpha_blend               1
+	$linearwrite               0
+	$linearread_basetexture    0
+	$linearread_texture1       1   // CRITICAL: line bank is DATA -- raw reads,
+	                               // no sRGB decode (garbles codes/localU)
+
+	$c0_x  1.7778    // aspect (16:9)
+	$c0_y  100       // box origin X, canvas px
+	$c0_z  700       // box origin Y (lower-third dialogue)
+	$c0_w  3         // scale
+
+	$c1_x  1         // baseRow: row 0 is reserved/blank, first real box is 1
+	                 // (keep in sync with the baker's row0 reservation)
+	$c1_y  99999     // reveal   (all text; typewriter drives this)
+	$c1_z  3         // numRows
+	$c1_w  0         // (unused)
+	$c2_x  20        // rowPitch, glyph px -- the ONLY pitch constant now
+
+	$c2_y 0  $c2_z 0  $c2_w 0
+	$c3_x 0  $c3_y 0  $c3_z 0  $c3_w 0
+
+	Proxies
+	{
+		Equals { srcVar1 $fix_fb  resultVar $flags2 }
+		MaterialModify {}
+	}
+}
