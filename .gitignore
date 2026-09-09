@@ -4,12 +4,12 @@
 
 !omori/
 !omori/materials/
-!omori/scripts/
 !omori/shaders/
 !omori/shaders/fxc/
 
-omori/scripts/stages/*
-# im a fat slob and leave breadcrumbs all over my desk
-omori/scripts/level.nut
-# proof of concept old nut file
-omori/scripts/screenoverlay_text.nut
+omori/scripts/*
+# cleanup
+!omori/scripts/atlas_out/
+!omori/scripts/mapcore.nut
+!omori/scripts/mapprint.nut
+!omori/scripts/soundcore.nut
