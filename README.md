@@ -10,9 +10,4 @@ Collection of vscripts or shaders that I did for specific maps
 - [Main Index](omori/projects/flexible_screenoverlay/README.md)
 
 ### Font Renderer Shader 
-> [!NOTE]
-> readme file, other needed files TBD
-- [Core File (dialogue_text.nut)](omori/scripts/dialogue_text.nut)
-- [Shader File (screenspace_font_line_ps20b.vcs)](omori/shaders/fxc/screenspace_font_line_ps20b.vcs)
-    - [.hlsl file (screenspace_font_line_ps2x.hlsl)](omori/shaders/screenspace_font_line_ps2x.hlsl)
-- [Helper Python File (Dialogue Baker via dialogue.txt) (bake_dialogue.py)](omori/scripts/bake_dialogue.py)
+- [Main Index](omori/projects/font_renderer_shader/README.md)
