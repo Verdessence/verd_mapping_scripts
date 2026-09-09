@@ -1,1 +1,1 @@
-F:/git/verd_mapping_scripts/omori/scripts/screenoverlay.nut
+../../screenoverlay.nut
