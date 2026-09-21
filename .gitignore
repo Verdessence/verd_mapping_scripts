@@ -1,15 +1,32 @@
-/*
+*
 !.gitignore
 !README.md
 
-!omori/
-!omori/materials/
-!omori/shaders/
-!omori/shaders/fxc/
+!git/
+!git/materials/
+!git/materials/dev/
+!git/materials/dev/*
+!git/materials/effects/
+!git/materials/effects/shaders/
+!git/materials/effects/shaders/*
 
-omori/scripts/*
-# cleanup
-!omori/scripts/atlas_out/
-!omori/scripts/mapcore.nut
-!omori/scripts/mapprint.nut
-!omori/scripts/soundcore.nut
+!git/projects/
+!git/projects/flexible_screenoverlay/
+!git/projects/flexible_screenoverlay/*
+!git/projects/font_rendering_shader/
+!git/projects/font_rendering_shader/*
+!git/projects/font_rendering_shader/atlas_out/
+!git/projects/font_rendering_shader/atlas_out/*
+
+!git/shaders/
+!git/shaders/*
+!git/shaders/fxc/
+!git/shaders/fxc/*
+
+# yeah bitch
+!common/
+!common/*
+
+# nah bitch
+omori/*
+todo.md
