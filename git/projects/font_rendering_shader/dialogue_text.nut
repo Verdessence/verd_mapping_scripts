@@ -10,6 +10,7 @@ const DLG_MATERIAL = "effects/shaders/screenspace_font_line";
                "$c1_x","$c1_y","$c1_z","$c1_w" ]; // row0, reveal, rows, pitch
 
 ::DlgCtl <- { bank = null, quad = null, typer = null, pos = null };
+try { PrecacheModel("models/verd/omori/text_quad.mdl"); } catch (e) { /* older branch: precache via map logic_script */ }
 
 // Typewriter defaults. Override per box via TypeBox(id, cps, { ... }).
 //   blip      : sound played per revealed glyph (null = silent)
@@ -41,19 +42,42 @@ const DLG_MATERIAL = "effects/shaders/screenspace_font_line";
 			player.SetScriptOverlayMaterial("");
 }
 
+const DLG_MODEL = "models/verd/omori/text_quad.mdl";
+
 ::DlgInit <- function(pos) {
 	::DlgCtl.pos = pos;                       // remembered for auto re-init
 	if (::DlgAlive()) return;
 	::DlgReset();
-	local bank = {};
+
+	// PHASE 1: antenna only. Its material must exist client-side BEFORE the
+	// MMCs spawn, otherwise C_MaterialModifyControl resolves its material
+	// name to a placeholder handle that never matches the one the antenna
+	// renders, and every SetMaterialVar is silently skipped until a
+	// mat_reloadallmaterials re-resolves it. (Diagnosed the hard way.)
+	// NOTE: no SetModelScale. The model's visible quad is already 1 unit;
+	// its render bounds are inflated in the model itself (degenerate
+	// triangles + $bbox/$cbox) so the CLIENT never frustum-culls it.
+	// SetSize only affects server-side bounds (transmit/PVS) -- kept.
+	// Shadows off: a 32000-unit bbox would otherwise cost a shadow frustum.
 	local quad = SpawnEntityFromTable("prop_dynamic", {
-		targetname = "dlg-antenna",
-		model = "models/verd/omori/text_quad.mdl",
-		origin = pos, solid = 0
+		targetname = "dlg-antenna", model = DLG_MODEL, origin = pos, solid = 0,
+		disableshadows = 1, disablereceiveshadows = 1, fademindist = -1, fademaxdist = 0
 	});
 	if (!quad) { printl("[dlg] antenna model failed to spawn -- not precached?"); return; }
-	quad.SetModelScale(0.01, 0.0);
 	quad.SetSize(Vector(-16000,-16000,-16000), Vector(16000,16000,16000));
+	::DlgCtl.quad = quad;
+
+	// PHASE 2, next tick(s): spawn the bank, prime, apply overlays.
+	local relay = SpawnEntityFromTable("logic_relay", { targetname = "dlg-init-relay" });
+	EntFireByHandle(relay, "RunScriptCode", "::DlgInitPhase2()", 0.15, null, null);
+	EntFireByHandle(relay, "Kill", "", 0.3, null, null);
+}
+
+::DlgInitPhase2 <- function() {
+	local quad = ::DlgCtl.quad;
+	if (!quad || !quad.IsValid()) return;
+	local pos  = quad.GetOrigin();
+	local bank = {};
 	foreach (v in ::DlgVars) {
 		local mmc = SpawnEntityFromTable("material_modify_control", {
 			targetname = "dlgvar" + v,
@@ -62,15 +86,14 @@ const DLG_MATERIAL = "effects/shaders/screenspace_font_line";
 		mmc.AcceptInput("SetParent", "!activator", quad, quad);
 		bank[v] <- mmc;
 	}
-	::DlgCtl.quad = quad;
 	::DlgCtl.bank = bank;                     // publish only on full success
-	::DlgApplyOverlay();
-	if (::DlgCfg.blip) PrecacheScriptSound(::DlgCfg.blip);   // same call soundcore uses
-	// PRIME: material vars persist across rounds, so whatever was showing
-	// at round end is still painted. Idle state in production = hidden.
+	if (::DlgCfg.blip) PrecacheScriptSound(::DlgCfg.blip);
+	// PRIME: material vars persist across rounds; idle = hidden.
 	::DlgSetVar("$c1_x", 1);
 	::DlgSetVar("$c1_z", 3);
 	::DlgSetVar("$c1_y", -1);
+	::DlgApplyOverlay();
+	printl("[dlg] ready");
 }
 
 ::DlgApplyOverlay <- function() {
